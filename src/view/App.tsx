@@ -1,4 +1,6 @@
-import { FileDisplay, TextReader, Uploader } from "../components/FileUpload";
+import { TextReader } from "../components/file-loader/TextReader";
+import { Uploader } from "../components/file-loader/Uploader";
+import { FileDisplay } from "../components/FileUpload";
 import Header from "../components/Header";
 import { RootElement } from "../components/RootElements";
 

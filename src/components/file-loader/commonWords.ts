@@ -4,6 +4,4 @@ const common: string =
   "no,not,of,on,once,or,out,s,said,she,so,that,the,their,there,them,then,this,till," +
   "to,var,was,went,were,what,when,where,which,while,who,whom,will,with,would,you,your,är";
 
-export const commonWordArray = () => {
-  return common.split(",");
-};
+export const commonWordArray = common.split(",");
