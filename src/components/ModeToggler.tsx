@@ -1,7 +1,7 @@
-import React, { FunctionComponent, PropsWithChildren, ReactElement } from "react";
+import React, { PropsWithChildren, ReactElement } from "react";
 import { Sun, Moon } from "react-feather";
 import { DefaultTheme, withTheme } from "styled-components";
-import { useDarkMode } from "../ThemeContext";
+import { useDarkMode } from "./ThemeContext";
 
 interface EnrichedChildren {
   darkMode: boolean;
