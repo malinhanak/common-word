@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { checkFileExtension } from "./checkFileExtension";
 import { findMostCommonWord } from "./findMostCommonWord";
 import { UploadButton } from "./UploadButton";
 
-export const Uploader = ({ setText, setMostCommon }: any) => {
+export const Uploader = ({ text, isUploading, setText, setMostCommon, setIsUploading }: any) => {
   const uploadInput = React.useRef<HTMLInputElement>(null);
 
   const handleFileUpLoad = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsUploading(true);
     const reader = new FileReader();
     const target: HTMLInputElement = event.target;
     const file: File = (target.files as FileList)[0];
@@ -26,6 +27,10 @@ export const Uploader = ({ setText, setMostCommon }: any) => {
     reader.readAsText(file, "ISO-8859-1");
   };
 
+  useEffect(() => {
+    if (text) setIsUploading(false);
+  }, [text, setIsUploading]);
+
   return (
     <UploaderWrapper>
       <Input
@@ -35,13 +40,13 @@ export const Uploader = ({ setText, setMostCommon }: any) => {
         ref={uploadInput}
         onChange={handleFileUpLoad}
       />
-      <UploadButton inputRef={uploadInput} />
+      <UploadButton inputRef={uploadInput} isUploading={isUploading} />
     </UploaderWrapper>
   );
 };
 
 const UploaderWrapper = styled.section`
-  max-width: 150px;
+  width: 200px;
   padding: 1rem;
   display: flex;
 `;

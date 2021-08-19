@@ -1,7 +1,7 @@
 import { Plus } from "react-feather";
 import styled from "styled-components";
 
-export const UploadButton = ({ inputRef }: any) => {
+export const UploadButton = ({ inputRef, isUploading }: any) => {
   const uploadFile = () => {
     if (inputRef.current) {
       return inputRef?.current.click();
@@ -9,9 +9,9 @@ export const UploadButton = ({ inputRef }: any) => {
   };
 
   return (
-    <Button onClick={uploadFile}>
+    <Button onClick={uploadFile} disabled={isUploading}>
       <Add />
-      Choose a file
+      {isUploading ? "...Loading file" : "Choose a file"}
     </Button>
   );
 };
@@ -22,7 +22,8 @@ const Button = styled.button`
   border-radius: 8px;
 
   color: ${(props) => props.theme.colors.main};
-  font-size: 0.7rem;
+  font-size: 0.9rem;
+  font-weight: 700;
   text-transform: uppercase;
 
   display: flex;

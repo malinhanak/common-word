@@ -1,14 +1,14 @@
 import htmr from "htmr";
 import styled from "styled-components";
 
-export const TextReader = ({ text, mostCommon }: any) => {
+export const TextReader = ({ text, mostCommon, isUploading }: any) => {
   const replacedWord = `<span class="common-word">${mostCommon}</span>`;
   const alteredText = text.replace(new RegExp(mostCommon, "gi"), replacedWord);
 
   return (
     <TextContainer>
-      <MostCommon>{mostCommon}</MostCommon>
-      <Text>{htmr(alteredText)}</Text>
+      {mostCommon && !isUploading && <MostCommon>{mostCommon}</MostCommon>}
+      <Text>{text && htmr(alteredText)}</Text>
     </TextContainer>
   );
 };
@@ -27,6 +27,7 @@ const Text = styled.p`
   font-weight: 200;
   font-family: "Roboto";
   text-align: justify;
+  margin-bottom: 8rem;
 
   span.common-word {
     font-weight: 700;
