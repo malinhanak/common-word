@@ -1,8 +1,8 @@
 import { FunctionComponent } from "react";
-import { GlobalStyle } from "./GlobalStyle";
+import { GlobalStyle } from "../theme/GlobalStyle";
 import { ThemeProvider } from "./ThemeContext";
 
-interface Props {
+export interface Props {
   children: JSX.Element | [JSX.Element];
 }
 

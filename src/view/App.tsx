@@ -1,6 +1,5 @@
-import "./App.css";
-import Header from "./components/Header";
-import { RootElement } from "./RootElements";
+import Header from "../components/Header";
+import { RootElement } from "../components/RootElements";
 
 function App() {
   return (

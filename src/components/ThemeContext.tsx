@@ -1,13 +1,13 @@
 import { FunctionComponent, createContext, useContext, useCallback } from "react";
 import { ThemeProvider as BaseThemeProvider } from "styled-components";
-import { useLocalStorage } from "./hooks/useLocalStorage";
-import { darkTheme, lightTheme } from "./theme";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { darkTheme, lightTheme } from "../theme/theme";
 
 interface Props {
   children: JSX.Element | [JSX.Element];
 }
 
-interface Context {
+export interface Context {
   darkMode: boolean;
   setDarkMode: any;
 }
