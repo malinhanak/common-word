@@ -1,6 +1,8 @@
 import styled, { withTheme, DefaultTheme } from "styled-components";
 import { FunctionComponent } from "react";
-import ModeToggle, { ToggleDark, ToggleLight } from "./ModeToggler";
+import ModeToggle from "./ModeToggler";
+import { ToggleLight } from "./mode-toggle/ToggleLight";
+import { ToggleDark } from "./mode-toggle/ToggleDark";
 
 interface HeaderProps {
   theme: DefaultTheme;
