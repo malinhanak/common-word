@@ -4,7 +4,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { darkTheme, lightTheme } from "../theme/theme";
 
 interface Props {
-  children: JSX.Element | [JSX.Element];
+  children: JSX.Element | JSX.Element[];
 }
 
 export interface Context {
