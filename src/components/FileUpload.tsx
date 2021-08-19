@@ -1,6 +1,7 @@
 import React, { Dispatch, PropsWithChildren, ReactElement, SetStateAction, useState } from "react";
 import styled from "styled-components";
 import { Plus } from "react-feather";
+import htmr from "htmr";
 import { commonWordArray } from "./file-loader/commonWords";
 
 interface EnrichedChildren {
@@ -67,23 +68,13 @@ const Uploader = ({ setText, setMostCommon }: any) => {
               .pop();
           } else throw new Error("No text to handle");
         };
-        let yourMostCommonWord = findMostCommonWord(fileResult);
-        console.log(yourMostCommonWord);
+        setMostCommon(findMostCommonWord(fileResult));
         setText(reader.result);
-        // let withThis = `<strong>foo</strong>${yourMostCommonWord}<strong>bar</strong>`;
-        // mostCommon.innerText = yourMostCommonWord;
-        // fileView.innerHTML = reader.result.replace(new RegExp(yourMostCommonWord, "gi"), withThis);
       };
     } else {
       setText(`${file.type} is not supported`);
     }
     reader.readAsText(file, "ISO-8859-1");
-
-    // reader.onloadend = () => {
-    //   console.log(reader.result);
-    //   setText(reader.result);
-    // };
-    // reader.readAsText(file);
   };
 
   return (
@@ -115,8 +106,16 @@ const Button = ({ inputRef }: any) => {
   );
 };
 
-const TextReader = ({ text }: any) => {
-  return <TextContainer>{text}</TextContainer>;
+const TextReader = ({ text, mostCommon }: any) => {
+  const replacedWord = `<span class="common-word">${mostCommon}</span>`;
+  const alteredText = text.replace(new RegExp(mostCommon, "gi"), replacedWord);
+
+  return (
+    <TextContainer>
+      <MostCommon>{mostCommon}</MostCommon>
+      <Text>{htmr(alteredText)}</Text>
+    </TextContainer>
+  );
 };
 
 const UploaderWrapper = styled.section`
@@ -126,9 +125,43 @@ const UploaderWrapper = styled.section`
 `;
 
 const TextContainer = styled.section`
-  max-width: 50%;
+  width: 60%;
+  height: 50vh;
   color: ${(props) => props.theme.colors.secondary};
   padding: 1rem;
+  overflow-x: auto;
+  -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+`;
+
+const Text = styled.p`
+  font-weight: 200;
+  font-family: "Roboto";
+  text-align: justify;
+
+  span.common-word {
+    font-weight: 700;
+    &:before {
+      content: "foo";
+      color: ${(props) => props.theme.colors.primary};
+    }
+    &:after {
+      content: "bar";
+      color: ${(props) => props.theme.colors.primary};
+    }
+  }
+`;
+
+const MostCommon = styled.p`
+  font-weight: 700;
+  font-family: "Poppins";
+  text-align: justify;
+
+  &:before {
+    content: "Most frequently used word:";
+    color: ${(props) => props.theme.colors.primary};
+    margin-right: 0.3rem;
+  }
 `;
 
 const Input = styled.input`
