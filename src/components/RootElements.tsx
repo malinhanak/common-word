@@ -3,7 +3,7 @@ import { GlobalStyle } from "../theme/GlobalStyle";
 import { ThemeProvider } from "./ThemeContext";
 
 export interface Props {
-  children: JSX.Element | [JSX.Element];
+  children: JSX.Element | JSX.Element[];
 }
 
 export const RootElement: FunctionComponent<Props> = ({ children }) => {
