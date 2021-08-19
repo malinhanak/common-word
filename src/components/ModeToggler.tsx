@@ -1,6 +1,5 @@
 import React, { PropsWithChildren, ReactElement } from "react";
-import { Sun, Moon } from "react-feather";
-import { DefaultTheme, withTheme } from "styled-components";
+import { DefaultTheme } from "styled-components";
 import { useDarkMode } from "./ThemeContext";
 
 interface EnrichedChildren {
@@ -19,13 +18,5 @@ const ModeToggle = ({ children }: any) => {
     </>
   );
 };
-
-export const ToggleLight = withTheme(({ darkMode, toggleDarkMode, theme }) => {
-  return darkMode ? <Sun color={theme.colors.secondary} onClick={toggleDarkMode} /> : null;
-});
-
-export const ToggleDark = withTheme(({ darkMode, toggleDarkMode, theme }) => {
-  return darkMode ? null : <Moon color={theme.colors.secondary} onClick={toggleDarkMode} />;
-});
 
 export default ModeToggle;
