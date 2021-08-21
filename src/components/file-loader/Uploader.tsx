@@ -1,14 +1,18 @@
 import React, { useEffect } from "react";
+import { ErrorBoundary, useErrorHandler } from "react-error-boundary";
 import styled from "styled-components";
+import { ErrorFallback } from "../ErrorFallback";
 import { checkFileExtension } from "./checkFileExtension";
 import { findMostCommonWord } from "./findMostCommonWord";
 import { UploadButton } from "./UploadButton";
 
 export const Uploader = ({ text, isUploading, setText, setMostCommon, setIsUploading }: any) => {
   const uploadInput = React.useRef<HTMLInputElement>(null);
+  const handleError = useErrorHandler();
 
   const handleFileUpLoad = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsUploading(true);
+    setMostCommon("");
     const reader = new FileReader();
     const target: HTMLInputElement = event.target;
     const file: File = (target.files as FileList)[0];
@@ -16,13 +20,16 @@ export const Uploader = ({ text, isUploading, setText, setMostCommon, setIsUploa
     if (checkFileExtension(file)) {
       reader.onload = (e: any) => {
         const fileResult = e.target.result;
-        if (fileResult === "") setText("Woopsie, it seems this file was empty!");
+        if (fileResult === "")
+          return handleError(
+            "Woopsie, it seems this file was empty! Reload to try with another file!"
+          );
 
         setMostCommon(findMostCommonWord(fileResult));
         setText(reader.result);
       };
     } else {
-      setText(`${file.type} is not supported`);
+      setText(`${file.name}, ${file.type} is not supported`);
     }
     reader.readAsText(file, "ISO-8859-1");
   };
@@ -32,16 +39,18 @@ export const Uploader = ({ text, isUploading, setText, setMostCommon, setIsUploa
   }, [text, setIsUploading]);
 
   return (
-    <UploaderWrapper>
-      <Input
-        type="file"
-        id="randomText"
-        name="randomText"
-        ref={uploadInput}
-        onChange={handleFileUpLoad}
-      />
-      <UploadButton inputRef={uploadInput} isUploading={isUploading} />
-    </UploaderWrapper>
+    <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[text]}>
+      <UploaderWrapper>
+        <Input
+          type="file"
+          id="randomText"
+          name="randomText"
+          ref={uploadInput}
+          onChange={handleFileUpLoad}
+        />
+        <UploadButton inputRef={uploadInput} isUploading={isUploading} />
+      </UploaderWrapper>
+    </ErrorBoundary>
   );
 };
 

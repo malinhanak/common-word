@@ -1,15 +1,18 @@
 import htmr from "htmr";
 import styled from "styled-components";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorFallback } from "../ErrorFallback";
 
 export const TextReader = ({ text, mostCommon, isUploading }: any) => {
   const replacedWord = `<span class="common-word">${mostCommon}</span>`;
-  const alteredText = text.replace(new RegExp(mostCommon, "gi"), replacedWord);
-
+  const alteredText = mostCommon ? text.replace(new RegExp(mostCommon, "gi"), replacedWord) : text;
   return (
-    <TextContainer>
-      {mostCommon && !isUploading && <MostCommon>{mostCommon}</MostCommon>}
-      <Text>{text && htmr(alteredText)}</Text>
-    </TextContainer>
+    <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[text]}>
+      <TextContainer>
+        {mostCommon && !isUploading && <MostCommon>{mostCommon}</MostCommon>}
+        <Text>{text && htmr(alteredText)}</Text>
+      </TextContainer>
+    </ErrorBoundary>
   );
 };
 
