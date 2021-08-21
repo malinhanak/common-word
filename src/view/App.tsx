@@ -1,5 +1,3 @@
-import { ErrorBoundary } from "react-error-boundary";
-import { ErrorFallback } from "../components/ErrorFallback";
 import { TextReader } from "../components/file-loader/TextReader";
 import { Uploader } from "../components/file-loader/Uploader";
 import { FileDisplay } from "../components/FileUpload";
